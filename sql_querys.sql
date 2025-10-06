@@ -175,11 +175,11 @@ SELECT
     EXTRACT(YEAR FROM sale_date) as year,
     EXTRACT(MONTH FROM sale_date) as month,
     AVG(total_sale) as avg_sale,
-    RANK() OVER(PARTITION BY EXTRACT(YEAR FROM sale_date) ORDER BY AVG(total_sale) DESC) as rank
+    RANK() OVER(PARTITION BY EXTRACT(YEAR FROM sale_date) ORDER BY AVG(total_sale) DESC) as rank_one
 FROM retail_sales
 GROUP BY 1, 2
 ) as t1
-WHERE rank = 1
+WHERE rank_one = 1
     
 -- ORDER BY 1, 3 DESC
 
@@ -189,8 +189,8 @@ SELECT
     customer_id,
     SUM(total_sale) as total_sales
 FROM retail_sales
-GROUP BY 1
-ORDER BY 2 DESC
+GROUP BY customer_id
+ORDER BY total_sales DESC
 LIMIT 5
 
 -- Q.9 Write a SQL query to find the number of unique customers who purchased items from each category.
